@@ -2,7 +2,7 @@ package application;
 
 import java.util.Scanner;
 import model.ProductModel;
-import service.InputHandler;
+import util.InputHandler;
 import service.ProductService;
 
 public class Program {

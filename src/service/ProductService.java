@@ -1,6 +1,7 @@
 package service;
 
-import dao.ProductDAO;
+import repository.ProductRepository;
+import exception.ProductsException;
 import model.ProductModel;
 
 import java.util.ArrayList;
@@ -8,8 +9,12 @@ import java.util.List;
 
 public class ProductService {
 
-    private ProductDAO productDAO;
+    private ProductRepository productRepository;
     private List<ProductModel> registeredProducts = new ArrayList<>();
+
+    public ProductService() {
+        this.productRepository = new ProductRepository();
+    }
 
     public boolean verifyCode(int code) {
         for (ProductModel product : registeredProducts) {
@@ -40,8 +45,8 @@ public class ProductService {
                 System.out.println("Product code is negative");
             }
             if (verifyCode(product.getProductCode())) {
-                registeredProducts.add(product);
-                System.out.println("Product registered successfully" + product);
+                productRepository.insertProduct(product);
+                System.out.println("Product registered successfully" + product.toString());
             }else {
                 throw new ProductsException("ERROR! Duplicated product code!");
             }
