@@ -27,5 +27,7 @@ public class Program {
 
         ProductModel newProduct = new ProductModel(productName, productCategory, productCode, productStock, productSellPrice, productCostPrice);
         productService.registerProduct(newProduct);
+
+        productService.listProducts();
     }
 }

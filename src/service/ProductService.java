@@ -10,10 +10,16 @@ import java.util.List;
 public class ProductService {
 
     private ProductRepository productRepository;
-    private List<ProductModel> registeredProducts = new ArrayList<>();
+    private List<ProductModel> registeredProducts;
 
     public ProductService() {
         this.productRepository = new ProductRepository();
+        this.registeredProducts = new ArrayList<>();
+        this.loadProductsFromDB();
+    }
+
+    private void loadProductsFromDB() {
+        this.registeredProducts = productRepository.getProducts();
     }
 
     public boolean verifyCode(int code) {
@@ -46,7 +52,8 @@ public class ProductService {
             }
             if (verifyCode(product.getProductCode())) {
                 productRepository.insertProduct(product);
-                System.out.println("Product registered successfully" + product.toString());
+                registeredProducts.add(product);
+                System.out.println("Product registered successfully" + product);
             }else {
                 throw new ProductsException("ERROR! Duplicated product code!");
             }

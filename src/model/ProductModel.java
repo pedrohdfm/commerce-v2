@@ -67,5 +67,15 @@ public class ProductModel {
         this.costPrice = costPrice;
     }
 
-
+    @Override
+    public String toString() {
+        return "ProductModel{" +
+                "productName='" + productName + '\'' +
+                ", productCategory='" + productCategory + '\'' +
+                ", productCode=" + productCode +
+                ", productStock=" + productStock +
+                ", sellPrice=" + sellPrice +
+                ", costPrice=" + costPrice +
+                '}';
+    }
 }
