@@ -72,4 +72,15 @@ public class ProductService {
             System.out.println(product);
         }
     }
+
+    public void deleteProduct(ProductModel product,int productCode) {
+        if (verifyEmptyList(registeredProducts)) {
+            return;
+        }
+        if (verifyCode(product.getProductCode())) {
+            registeredProducts.remove(product);
+            productRepository.deleteProductFromDB(productCode);
+            System.out.println("Product deleted successfully" + product);
+        }
+    }
 }

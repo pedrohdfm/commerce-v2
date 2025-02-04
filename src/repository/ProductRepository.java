@@ -31,7 +31,8 @@ public class ProductRepository {
         }
     }
 
-    public List<ProductModel> getProducts() {;
+    public List<ProductModel> getProducts() {
+        ;
         String sql = "SELECT * FROM products";
         List<ProductModel> products = new ArrayList<>();
 
@@ -60,5 +61,30 @@ public class ProductRepository {
             e.printStackTrace();
         }
         return products;
+    }
+
+    public void deleteProductFromDB(int productCode) {
+        String sql = "DELETE FROM products WHERE productCode = ?";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Define o valor do parâmetro (productCode) na consulta SQL
+            pstmt.setInt(1, productCode);
+
+            // Executa a consulta de exclusão
+            int rowsAffected = pstmt.executeUpdate();
+
+            // Verifica se o produto foi deletado
+            if (rowsAffected > 0) {
+                System.out.println("Product deleted successfully!");
+            } else {
+                System.out.println("No product found with code: " + productCode);
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("ERROR! Cannot delete product from database." + e.getMessage());
+        }
     }
 }
