@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class InputHandler {
 
-    public static int captureAndValidateProductCode(Scanner sc) {
+    public static int validateProductCode(Scanner sc) {
         boolean validInput = false;
         int productCode = 0;
         while(!validInput) {
@@ -28,4 +28,6 @@ public class InputHandler {
         }
         return productCode;
     }
+
+    public static void stringInputHandler() {}
 }
