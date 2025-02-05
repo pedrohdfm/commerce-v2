@@ -1,12 +1,8 @@
 package application;
 
-import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import exception.ProductsException;
 import model.ProductModel;
-import repository.ConnectionDB;
 import util.InputHandler;
 import service.ProductService;
 
@@ -69,12 +65,48 @@ public class Program {
                         }
                         if (ynoption.equalsIgnoreCase("y")) {
                             productService.deleteProduct(productCode);
-                        }else {
+                        } else {
                             System.out.println("Deletion cancelled.");
                         }
                     }
                     // UPDATE PRODUCT
                     case 5 -> {
+                        productService.listProducts();
+                        System.out.println("First, enter the product code you want to update: ");
+                        int productCode = InputHandler.validateProductCode(sc);
+                        boolean backToMenu = false;
+                        while (!backToMenu) {
+                            UI.updateProductMenu();
+                            int updateOption = sc.nextInt();
+                            sc.nextLine();
+
+                            switch (updateOption) {
+                                case 1 -> {
+                                    System.out.println("Enter the new product stock: ");
+                                    int productStock = sc.nextInt();
+                                    sc.nextLine();
+                                    productService.updateProductStock(productCode, productStock);
+                                }
+                                case 2 -> {
+                                    System.out.println("Enter the new sell price: ");
+                                    double productSellPrice = sc.nextDouble();
+                                    sc.nextLine();
+                                    productService.updateProductSellPrice(productCode, productSellPrice);
+                                }
+                                case 3 -> {
+                                    System.out.println("Enter the new cost price: ");
+                                    double productCostPrice = sc.nextDouble();
+                                    sc.nextLine();
+                                    productService.updateProductCostPrice(productCode, productCostPrice);
+                                }
+                                case 4 -> {
+                                    backToMenu = true;
+                                    System.out.println("Returning to the main menu...");
+                                }
+                                default -> System.out.println("Invalid option, please try again.");
+                            }
+                        }
+
                     }
                     // EXIT SYSTEM
                     case 6 -> {

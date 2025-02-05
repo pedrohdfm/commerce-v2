@@ -32,7 +32,6 @@ public class ProductRepository {
     }
 
     public List<ProductModel> getProducts() {
-        ;
         String sql = "SELECT * FROM products";
         List<ProductModel> products = new ArrayList<>();
 
@@ -85,6 +84,99 @@ public class ProductRepository {
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println("ERROR! Cannot delete product from database." + e.getMessage());
+        }
+    }
+
+    /*public void updateProduct(int productCode, int productStock, double productSellPrice, double productCostPrice) {
+        String sql = "UPDATE products SET productStock = ?, productSellPrice = ?, productCostPrice = ? WHERE productCode = ?";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, productStock);
+            pstmt.setDouble(2, productSellPrice);
+            pstmt.setDouble(3, productCostPrice);
+            pstmt.setInt(4, productCode);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Product updated successfully in the database!");
+            } else {
+                System.out.println("No product found with code: " + productCode);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("ERROR! Cannot update product in the database: " + e.getMessage());
+        }
+    }*/
+    public void updateProductStock(int productCode, int productStock) {
+        String sql = "UPDATE products SET productStock = ? WHERE productCode = ?";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, productStock);
+            pstmt.setInt(2, productCode);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Product stock updated successfully in the database!");
+            } else {
+                System.out.println("No product found with code: " + productCode);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("ERROR! Cannot update product stock in the database: " + e.getMessage());
+        }
+    }
+
+    public void updateProductSellPrice(int productCode, double productSellPrice) {
+        String sql = "UPDATE products SET productSellPrice = ? WHERE productCode = ?";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setDouble(1, productSellPrice);
+            pstmt.setInt(2, productCode);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Product sell price updated successfully in the database!");
+            } else {
+                System.out.println("No product found with code: " + productCode);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("ERROR! Cannot update product sell price in the database: " + e.getMessage());
+        }
+    }
+
+    public void updateProductCostPrice(int productCode, double productCostPrice) {
+        String sql = "UPDATE products SET productCostPrice = ? WHERE productCode = ?";
+
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setDouble(1, productCostPrice);
+            pstmt.setInt(2, productCode);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Product cost price updated successfully in the database!");
+            } else {
+                System.out.println("No product found with code: " + productCode);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("ERROR! Cannot update product cost price in the database: " + e.getMessage());
         }
     }
 }
