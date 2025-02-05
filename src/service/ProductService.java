@@ -73,14 +73,49 @@ public class ProductService {
         }
     }
 
-    public void deleteProduct(ProductModel product,int productCode) {
+    public void listProductsByCategory(String category) {
         if (verifyEmptyList(registeredProducts)) {
             return;
         }
-        if (verifyCode(product.getProductCode())) {
-            registeredProducts.remove(product);
+        boolean productExists = false;
+        for (ProductModel product : registeredProducts) {
+            if (product.getProductCategory().equals(category)) {
+                productExists = true;
+                break;
+            }
+        }
+        if (!productExists) {
+            System.out.println("Product category -> " + category + ", does not exist");
+        }
+        System.out.println();
+        System.out.println("Product list of " + category);
+        for(ProductModel product : registeredProducts) {
+            if(product.getProductCategory().equals(category)) {
+                System.out.println(product);
+            }
+        }
+    }
+
+    public void deleteProduct(int productCode) {
+        if (verifyEmptyList(registeredProducts)) {
+            return;
+        }
+        // Verifica se o produto existe na lista
+        boolean productExists = false;
+        for (ProductModel product : registeredProducts) {
+            if (product.getProductCode() == productCode) {
+                productExists = true;
+                break;
+            }
+        }
+        if (productExists) {
+            // Remove o produto da lista em memória
+            registeredProducts.removeIf(product -> product.getProductCode() == productCode);
+            // Remove o produto do banco de dados
             productRepository.deleteProductFromDB(productCode);
-            System.out.println("Product deleted successfully" + product);
+            System.out.println("Product deleted successfully!");
+        } else {
+            System.out.println("Product not found with code: " + productCode);
         }
     }
 }
