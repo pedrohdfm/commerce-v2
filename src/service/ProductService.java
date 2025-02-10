@@ -22,15 +22,6 @@ public class ProductService {
         this.registeredProducts = productRepository.getProducts();
     }
 
-    public boolean verifyCode(int code) {
-        for (ProductModel product : registeredProducts) {
-            if(product.getProductCode() == code) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private boolean productExists(int productCode) {
         for (ProductModel product : registeredProducts) {
             if (product.getProductCode() == productCode) {
@@ -62,7 +53,7 @@ public class ProductService {
             if (product.getCostPrice()<0 && product.getSellPrice() <0) {
                 System.out.println("Product sell or cost price is negative");
             }
-            if (verifyCode(product.getProductCode())) {
+            if (productExists(product.getProductCode())) {
                 productRepository.insertProduct(product);
                 registeredProducts.add(product);
                 System.out.println("Product registered successfully" + product);

@@ -37,11 +37,6 @@ public class ProductRepository {
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
-             /* Resultset armazena o resultado da consulta sql,
-               então ele faz uma varredura no bd através do rs.next()
-              e adiciona na lista de produtos para depois, através do método de listar no ProductService
-              retornar todos os produtos do db
-             */
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
@@ -68,13 +63,8 @@ public class ProductRepository {
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Define o valor do parâmetro (productCode) na consulta SQL
             pstmt.setInt(1, productCode);
-
-            // Executa a consulta de exclusão
             int rowsAffected = pstmt.executeUpdate();
-
-            // Verifica se o produto foi deletado
             if (rowsAffected > 0) {
                 System.out.println("Product deleted successfully!");
             } else {
@@ -87,30 +77,7 @@ public class ProductRepository {
         }
     }
 
-    /*public void updateProduct(int productCode, int productStock, double productSellPrice, double productCostPrice) {
-        String sql = "UPDATE products SET productStock = ?, productSellPrice = ?, productCostPrice = ? WHERE productCode = ?";
 
-        try (Connection conn = ConnectionDB.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, productStock);
-            pstmt.setDouble(2, productSellPrice);
-            pstmt.setDouble(3, productCostPrice);
-            pstmt.setInt(4, productCode);
-
-            int rowsAffected = pstmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Product updated successfully in the database!");
-            } else {
-                System.out.println("No product found with code: " + productCode);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("ERROR! Cannot update product in the database: " + e.getMessage());
-        }
-    }*/
     public void updateProductStock(int productCode, int productStock) {
         String sql = "UPDATE products SET productStock = ? WHERE productCode = ?";
 

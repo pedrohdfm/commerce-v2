@@ -12,7 +12,6 @@ public class ConnectionDB {
 
     static {
         try {
-            // Tentativa de registrar o driver JDBC
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
